@@ -8,6 +8,8 @@ public class DashboardFrame extends JFrame {
     private JPanel mainPanel;
     private CardLayout cardLayout;
     private TaskListPanel taskListPanel;
+    private TaskFormPanel taskFormPanel;
+
 
 
     public DashboardFrame() {
@@ -20,10 +22,11 @@ public class DashboardFrame extends JFrame {
         mainPanel = new JPanel(cardLayout);
 
         taskListPanel = new TaskListPanel(this);
-
+        taskFormPanel = new TaskFormPanel(this);
 
         mainPanel.add(createDashboardPanel(), "dashboard");
         mainPanel.add(taskListPanel, "tasklist");
+        mainPanel.add(taskFormPanel, "taskform");
 
         add(mainPanel);
         setVisible(true);
@@ -66,7 +69,10 @@ public class DashboardFrame extends JFrame {
         JButton btnHistory = createMenuButton("Riwayat");
 
         btnTaskList.addActionListener(e -> showPanel("tasklist"));
-
+        btnAddTask.addActionListener(e -> {
+            taskFormPanel.clearForm();
+            showPanel("taskform");
+        });
 
         innerButtonGrid.add(btnTaskList);
         innerButtonGrid.add(btnAddTask);
@@ -93,5 +99,13 @@ public class DashboardFrame extends JFrame {
 
     public void showPanel(String panelName) {
         cardLayout.show(mainPanel, panelName);
+    }
+    public void refreshTaskList() {
+        taskListPanel.refreshTable();
+    }
+
+    public void editTask(int taskId) {
+        taskFormPanel.loadTask(taskId);
+        showPanel("taskform");
     }
 }

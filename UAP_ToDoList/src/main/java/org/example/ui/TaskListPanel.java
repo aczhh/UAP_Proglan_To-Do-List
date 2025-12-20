@@ -59,6 +59,9 @@ public class TaskListPanel extends JPanel {
         btnSearch.addActionListener(e -> searchTasks());
         btnSortPriority.addActionListener(e -> sortByPriority());
         btnSortDeadline.addActionListener(e -> sortByDeadline());
+        btnEdit.addActionListener(e -> editTask());
+        btnDelete.addActionListener(e -> deleteTask());
+        btnComplete.addActionListener(e -> completeTask());
 
         controlPanel.add(new JLabel(" Cari: "));
         controlPanel.add(searchField);
@@ -174,5 +177,45 @@ public class TaskListPanel extends JPanel {
     private void sortByDeadline() {
         tasks.sort(Comparator.comparing(Task::getDeadline));
         updateTable(tasks);
+    }
+
+    private void editTask() {
+        int row = table.getSelectedRow();
+        if (row >= 0) {
+            int taskId = (int) tableModel.getValueAt(row, 0);
+            parent.editTask(taskId);
+        } else {
+            JOptionPane.showMessageDialog(this, "Pilih tugas yang akan diedit!");
+        }
+    }
+
+    private void deleteTask() {
+        int row = table.getSelectedRow();
+        if (row >= 0) {
+            int confirm = JOptionPane.showConfirmDialog(this, "Hapus tugas ini?");
+            if (confirm == JOptionPane.YES_OPTION) {
+                int taskId = (int) tableModel.getValueAt(row, 0);
+                tasks.removeIf(t -> t.getId() == taskId);
+                FileHandler.saveTasks(tasks);
+                FileHandler.addHistory("DELETE", tableModel.getValueAt(row, 1).toString());
+                refreshTable();
+            }
+        }
+    }
+
+    private void completeTask() {
+        int row = table.getSelectedRow();
+        if (row >= 0) {
+            int taskId = (int) tableModel.getValueAt(row, 0);
+            for (Task task : tasks) {
+                if (task.getId() == taskId) {
+                    task.setCompleted(true);
+                    FileHandler.saveTasks(tasks);
+                    FileHandler.addHistory("COMPLETE", task.getTitle());
+                    refreshTable();
+                    break;
+                }
+            }
+        }
     }
 }
