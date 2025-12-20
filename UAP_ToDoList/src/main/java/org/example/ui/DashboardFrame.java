@@ -7,6 +7,8 @@ import java.awt.*;
 public class DashboardFrame extends JFrame {
     private JPanel mainPanel;
     private CardLayout cardLayout;
+    private TaskListPanel taskListPanel;
+
 
     public DashboardFrame() {
         setTitle("To-Do List App");
@@ -17,7 +19,11 @@ public class DashboardFrame extends JFrame {
         cardLayout = new CardLayout();
         mainPanel = new JPanel(cardLayout);
 
+        taskListPanel = new TaskListPanel(this);
+
+
         mainPanel.add(createDashboardPanel(), "dashboard");
+        mainPanel.add(taskListPanel, "tasklist");
 
         add(mainPanel);
         setVisible(true);
@@ -58,6 +64,9 @@ public class DashboardFrame extends JFrame {
         JButton btnTaskList = createMenuButton("Daftar Tugas");
         JButton btnAddTask = createMenuButton("Tambah Tugas");
         JButton btnHistory = createMenuButton("Riwayat");
+
+        btnTaskList.addActionListener(e -> showPanel("tasklist"));
+
 
         innerButtonGrid.add(btnTaskList);
         innerButtonGrid.add(btnAddTask);
