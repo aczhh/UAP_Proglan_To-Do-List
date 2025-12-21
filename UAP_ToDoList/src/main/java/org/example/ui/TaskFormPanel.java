@@ -18,11 +18,9 @@ public class TaskFormPanel extends JPanel {
     public TaskFormPanel(DashboardFrame parent) {
         this.parent = parent;
         setLayout(new BorderLayout(15, 15));
-        // Latar belakang utama kuning seirama dengan TaskListPanel
         setBackground(Color.decode("#FFF8B8"));
         setBorder(BorderFactory.createEmptyBorder(20, 40, 20, 40));
 
-        // ===== 1. HEADER SECTION =====
         JPanel headerPanel = new JPanel(new BorderLayout());
         headerPanel.setBackground(Color.decode("#FFF8B8"));
 
@@ -30,7 +28,6 @@ public class TaskFormPanel extends JPanel {
         title.setFont(new Font("Arial", Font.BOLD, 26));
         title.setForeground(new Color(98, 149, 89));
 
-        // Spacer kiri agar judul tetap di tengah
         JLabel leftSpacer = new JLabel("");
         leftSpacer.setPreferredSize(new Dimension(110, 30));
         headerPanel.add(leftSpacer, BorderLayout.WEST);
@@ -44,9 +41,8 @@ public class TaskFormPanel extends JPanel {
         headerPanel.add(title, BorderLayout.CENTER);
         add(headerPanel, BorderLayout.NORTH);
 
-        // ===== 2. FORM PANEL (HIJAU MUDA) =====
         JPanel formWrapper = new JPanel(new GridBagLayout());
-        formWrapper.setBackground(Color.decode("#E0FFCC")); // Warna hijau form
+        formWrapper.setBackground(Color.decode("#E0FFCC"));
         formWrapper.setBorder(BorderFactory.createCompoundBorder(
                 BorderFactory.createLineBorder(Color.decode("#CAF2C2"), 2),
                 BorderFactory.createEmptyBorder(20, 20, 20, 20)
@@ -54,12 +50,11 @@ public class TaskFormPanel extends JPanel {
 
         GridBagConstraints gbc = new GridBagConstraints();
         gbc.fill = GridBagConstraints.HORIZONTAL;
-        gbc.insets = new Insets(12, 12, 12, 12); // Jarak antar input diperbesar
+        gbc.insets = new Insets(12, 12, 12, 12);
 
-        Font labelFont = new Font("Arial", Font.BOLD, 16); // Font label lebih besar
-        Font inputFont = new Font("Arial", Font.PLAIN, 15); // Font input lebih besar
+        Font labelFont = new Font("Arial", Font.BOLD, 16);
+        Font inputFont = new Font("Arial", Font.PLAIN, 15);
 
-        // Title
         gbc.gridx = 0; gbc.gridy = 0;
         JLabel lblJudul = new JLabel("Judul:");
         lblJudul.setFont(labelFont);
@@ -73,7 +68,6 @@ public class TaskFormPanel extends JPanel {
         txtTitle.setForeground(Color.decode("#AF7D77"));
         formWrapper.add(txtTitle, gbc);
 
-        // Description
         gbc.gridx = 0; gbc.gridy = 1;
         JLabel lblDesc = new JLabel("Deskripsi:");
         lblDesc.setFont(labelFont);
@@ -91,7 +85,6 @@ public class TaskFormPanel extends JPanel {
         scrollDesc.setBorder(BorderFactory.createLineBorder(Color.LIGHT_GRAY));
         formWrapper.add(scrollDesc, gbc);
 
-        // Deadline
         gbc.gridx = 0; gbc.gridy = 2;
         JLabel lblDeadline = new JLabel("Deadline:");
         lblDeadline.setFont(labelFont);
@@ -106,7 +99,6 @@ public class TaskFormPanel extends JPanel {
         txtDeadline.setText(LocalDate.now().toString());
         formWrapper.add(txtDeadline, gbc);
 
-        // Priority
         gbc.gridx = 0; gbc.gridy = 3;
         JLabel lblPrioritas = new JLabel("Prioritas:");
         lblPrioritas.setFont(labelFont);
@@ -122,7 +114,6 @@ public class TaskFormPanel extends JPanel {
 
         add(formWrapper, BorderLayout.CENTER);
 
-        // ===== 3. BUTTON PANEL Bawah =====
         JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 20, 10));
         buttonPanel.setBackground(Color.decode("#FFF8B8"));
 
@@ -137,7 +128,6 @@ public class TaskFormPanel extends JPanel {
         add(buttonPanel, BorderLayout.SOUTH);
     }
 
-    // Fungsi styling tombol agar seirama
     private JButton createStyledButton(String text) {
         JButton btn = new JButton(text);
         btn.setBackground(Color.decode("#FFD6C9"));
