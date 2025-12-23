@@ -9,8 +9,7 @@ public class DashboardFrame extends JFrame {
     private CardLayout cardLayout;
     private TaskListPanel taskListPanel;
     private TaskFormPanel taskFormPanel;
-
-
+    private HistoryPanel historyPanel;
 
     public DashboardFrame() {
         setTitle("To-Do List App");
@@ -23,10 +22,12 @@ public class DashboardFrame extends JFrame {
 
         taskListPanel = new TaskListPanel(this);
         taskFormPanel = new TaskFormPanel(this);
+        historyPanel = new HistoryPanel();
 
         mainPanel.add(createDashboardPanel(), "dashboard");
         mainPanel.add(taskListPanel, "tasklist");
         mainPanel.add(taskFormPanel, "taskform");
+        mainPanel.add(historyPanel, "history");
 
         add(mainPanel);
         setVisible(true);
@@ -73,6 +74,10 @@ public class DashboardFrame extends JFrame {
             taskFormPanel.clearForm();
             showPanel("taskform");
         });
+        btnHistory.addActionListener(e -> {
+            historyPanel.refreshHistory();
+            showPanel("history");
+        });
 
         innerButtonGrid.add(btnTaskList);
         innerButtonGrid.add(btnAddTask);
@@ -100,6 +105,7 @@ public class DashboardFrame extends JFrame {
     public void showPanel(String panelName) {
         cardLayout.show(mainPanel, panelName);
     }
+
     public void refreshTaskList() {
         taskListPanel.refreshTable();
     }
